@@ -4,6 +4,7 @@
 **Team:** Ali Salloum, Yazan Kbaili  
 **Milestone:** Phase 1 — Setup and first retrieval baseline  
 **Date:** March 2025  
+**Repository:** [github.com/ali-salloum6/Domain-Specific-RL-Retrieval-with-Limited-Labels](https://github.com/ali-salloum6/Domain-Specific-RL-Retrieval-with-Limited-Labels)
 
 ---
 
@@ -100,6 +101,7 @@ Tasks for the first milestone were split as follows (kept simple and aligned wit
 
 ## 6. References
 
+- **Project repository:** [github.com/ali-salloum6/Domain-Specific-RL-Retrieval-with-Limited-Labels](https://github.com/ali-salloum6/Domain-Specific-RL-Retrieval-with-Limited-Labels)
 - **Proposal:** `Proposal_Idea4_Domain_Specific_RL_Retrieval.md`
 - **CLERC:** [arXiv:2406.17186](https://arxiv.org/abs/2406.17186), [HuggingFace jhu-clsp/CLERC](https://huggingface.co/datasets/jhu-clsp/CLERC), [GitHub](https://github.com/bohanhou14/CLERC)
 - **RL for retrieval (ICLR 2024):** [OpenReview](https://openreview.net/forum?id=xThb6APBoG) — policy-gradient adaptation of retrievers to task-specific goals
