@@ -1,0 +1,25 @@
+# Phase 1 CLERC setup - minimal deps for data load, eval, BM25, DPR
+# Python 3.10+ recommended (CLERC/ir-datasets compatibility)
+
+datasets>=2.14.0
+huggingface-hub>=0.19.0
+pandas>=2.0.0
+numpy>=1.24.0
+tqdm>=4.65.0
+
+# Evaluation metrics (recall@k, MRR, nDCG)
+ir-measures>=0.3.0
+
+# BM25 retrieval
+pyserini>=0.22.0
+
+# DPR / dense retrieval (HF transformers + encode)
+torch>=2.0.0
+transformers>=4.36.0
+sentence-transformers>=2.2.0
+
+# Optional: faiss for fast dense retrieval (can use brute-force otherwise)
+faiss-cpu>=1.7.0
+
+# Optional: faster HF downloads (recommended for CLERC 9GB collection; enables resume-friendly transfer)
+hf_transfer>=0.1.0
