@@ -30,18 +30,21 @@ def run_bm25(
 ) -> dict[str, list[str]]:
     """
     Run BM25 retrieval via Pyserini.
-    collection_path: path to TSV (doc_id, text) or directory of Pyserini docs.
-    If None, uses a mock run for pipeline test (no real index).
+    collection_path: path to a built Pyserini index directory.
     Returns run dict: qid -> list of retrieved doc ids.
     """
     try:
         from pyserini.search import SimpleSearcher
-        from pyserini.index import IndexReader
-    except ImportError:
-        return _mock_run_bm25(queries_df, qrels, top_k)
+    except ImportError as e:
+        raise RuntimeError(
+            "BM25 requires Pyserini. Install dependencies or use --mock for a placeholder run."
+        ) from e
 
     if not collection_path or not Path(collection_path).exists():
-        return _mock_run_bm25(queries_df, qrels, top_k)
+        raise ValueError(
+            "BM25 requires --bm25-index pointing to an existing Pyserini index. "
+            "Use --mock only for pipeline smoke tests."
+        )
 
     # Assume Pyserini index already built (see README)
     searcher = SimpleSearcher(str(collection_path))
@@ -87,8 +90,10 @@ def run_dpr(
     try:
         from sentence_transformers import SentenceTransformer
         import numpy as np
-    except ImportError:
-        return _mock_run_dpr(queries_df, qrels, top_k)
+    except ImportError as e:
+        raise RuntimeError(
+            "DPR requires sentence-transformers and numpy. Install dependencies or use --mock."
+        ) from e
 
     _from_ckpt_only = False
     _have_q_from_ckpt = False
@@ -192,10 +197,9 @@ def run_dpr(
                         print("checkpoint saved: %d passages" % n_encoded, flush=True)
                     _from_ckpt_only = False
             except Exception as e:
-                print("corpus load failed, using qrels only:", e, flush=True)
-                corpus_ids, corpus_texts = _minimal_corpus_from_qrels(qrels)
-                _from_ckpt_only = False
-                _have_q_from_ckpt = False
+                raise RuntimeError(
+                    "Failed to load/encode DPR corpus. Refusing to continue with placeholder corpus."
+                ) from e
         else:
             corpus_ids, corpus_texts = _minimal_corpus_from_qrels(qrels)
             _from_ckpt_only = False
@@ -272,7 +276,7 @@ def _mock_run_dpr(queries_df, qrels: dict, top_k: int) -> dict[str, list[str]]:
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--query-type", default="direct", choices=["direct", "indirect"])
-    ap.add_argument("--qrels-level", default="doc", choices=["doc", "passage"])
+    ap.add_argument("--qrels-level", default="passage", choices=["doc", "passage"])
     ap.add_argument("--bm25", action="store_true", help="Run BM25 baseline")
     ap.add_argument("--dpr", action="store_true", help="Run DPR baseline (HF LegalBERT-DPR-CLERC-ft)")
     ap.add_argument("--bm25-index", type=str, default="", help="Path to Pyserini BM25 index (optional)")
@@ -290,6 +294,12 @@ def main():
 
     if not args.bm25 and not args.dpr:
         args.bm25 = args.dpr = True
+
+    if args.dpr and args.qrels_level != "passage" and not args.mock:
+        raise ValueError(
+            "DPR baseline in this script retrieves passage IDs. "
+            "Use --qrels-level passage for valid evaluation."
+        )
 
     run_bm25_fn = run_bm25
     run_dpr_fn = run_dpr

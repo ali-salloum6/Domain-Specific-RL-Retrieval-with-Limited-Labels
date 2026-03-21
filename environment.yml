@@ -1,0 +1,10 @@
+# Recreate the project conda environment:
+#   conda env create -f environment.yml
+#   conda activate clerc-retrieval
+#   pip install -r setup/requirements.txt
+name: clerc-retrieval
+channels:
+  - defaults
+dependencies:
+  - python=3.11
+  - pip

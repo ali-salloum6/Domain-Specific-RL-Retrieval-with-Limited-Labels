@@ -5,6 +5,8 @@ Reproducible setup for the **Domain-Specific RL Retrieval** project (Phase 1): C
 ## Environment
 
 - **Python:** 3.10+ (tested on 3.11)
+
+**Windows note:** HuggingFace `datasets` uses long lock filenames. If you hit `FileNotFoundError` on a `.lock` file under a deep project path, set a short cache explicitly: `CLERC_HF_CACHE=%USERPROFILE%\.cache\clerc_hf` (the code defaults to `%USERPROFILE%\.cache\clerc_hf` for this reason).
 - **Clone CLERC:** `git clone https://github.com/bohanhou14/CLERC.git` (optional; data is loaded from HuggingFace)
 
 From the **repository root** (parent of `setup/`):
@@ -16,6 +18,10 @@ pip install -r setup/requirements.txt
 ```
 
 Optional for BM25 index build: Java 11+ (for Pyserini). Optional for faster DPR: `faiss-gpu` instead of `faiss-cpu`.
+
+## Run on Kaggle
+
+Use the notebook [`notebooks/Kaggle_CLERC_Baselines.ipynb`](../notebooks/Kaggle_CLERC_Baselines.ipynb): enable **Internet**, optionally **GPU**, set `REPO_URL` if your fork differs, then run cells in order. Outputs go to `/kaggle/working/runs/` for download.
 
 ## Data (HuggingFace)
 
@@ -68,13 +74,15 @@ metrics = evaluate("setup/data/runs/run_dpr.json", query_type="direct", qrels_le
 
 Uses [jhu-clsp/LegalBERT-DPR-CLERC-ft](https://huggingface.co/jhu-clsp/LegalBERT-DPR-CLERC-ft) or [jhu-clsp/BERT-DPR-CLERC-ft](https://huggingface.co/jhu-clsp/BERT-DPR-CLERC-ft). Encodes queries and passage collection, then retrieves by similarity.
 
+Important: this DPR pipeline retrieves passage IDs, so evaluate with passage-level qrels (`--qrels-level passage`).
+
 ```bash
 # Quick run: minimal corpus from qrels (placeholder text; fast, low metrics)
-python -m setup.run_baselines --dpr --out-dir setup/data/runs
+python -m setup.run_baselines --dpr --qrels-level passage --out-dir setup/data/runs
 
 # Full baseline: first N passages from CLERC collection (real retrieval)
 # Requires the 9GB collection cached; streams first N lines, no full load
-python -m setup.run_baselines --dpr --dpr-corpus 10000 --out-dir setup/data/runs
+python -m setup.run_baselines --dpr --qrels-level passage --dpr-corpus 10000 --out-dir setup/data/runs
 ```
 
 Output: `setup/data/runs/run_dpr.json`, `baseline_metrics.json`.
@@ -95,8 +103,10 @@ Requires a pre-built Pyserini index from the CLERC document (or passage) collect
 3. **Run baseline:**
 
    ```bash
-   python -m setup.run_baselines --bm25 --bm25-index <path_to_index> --out-dir setup/data/runs
+   python -m setup.run_baselines --bm25 --qrels-level doc --bm25-index <path_to_index> --out-dir setup/data/runs
    ```
+
+The baseline runner now refuses to silently fall back to mock runs when dependencies or index/model are missing. Use `--mock` explicitly only for smoke tests.
 
 ## Collection cache and download progress
 

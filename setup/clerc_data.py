@@ -24,6 +24,21 @@ def get_data_dir() -> Path:
     return d
 
 
+def get_hf_datasets_cache_dir() -> str:
+    """
+    Directory for HuggingFace `datasets` cache when loading CLERC shards.
+
+    Default is under the user home (short path). A deep repo path like Desktop/.../setup/data/hf_cache
+    can make `datasets` lock filenames exceed Windows MAX_PATH. Override with env CLERC_HF_CACHE.
+    """
+    if os.environ.get("CLERC_HF_CACHE"):
+        p = Path(os.environ["CLERC_HF_CACHE"])
+    else:
+        p = Path.home() / ".cache" / "clerc_hf"
+    p.mkdir(parents=True, exist_ok=True)
+    return str(p)
+
+
 # Approximate total passages in collection.passage.tsv.gz (~9 GB); used for --dpr-corpus-pct.
 # Source: dataset scale described as millions of instances (HF/paper).
 CLERC_PASSAGE_COUNT_APPROX = 25_000_000
@@ -92,8 +107,7 @@ def load_queries_and_qrels_hf(
     from datasets import load_dataset
     import pandas as pd
 
-    data_dir = get_data_dir()
-    cache_dir = cache_dir or str(data_dir / "hf_cache")
+    cache_dir = cache_dir or get_hf_datasets_cache_dir()
 
     queries_file = f"queries/test.single-removed.{query_type}.tsv"
     qrels_file = f"qrels/qrels-{qrels_level}.test.{query_type}.tsv"
@@ -307,8 +321,7 @@ def load_collection_hf(
     """
     from datasets import load_dataset
 
-    data_dir = get_data_dir()
-    cache_dir = cache_dir or str(data_dir / "hf_cache")
+    cache_dir = cache_dir or get_hf_datasets_cache_dir()
     key = f"collection_{collection_type}"
     path = CLERC_HF_FILES[key]
 
