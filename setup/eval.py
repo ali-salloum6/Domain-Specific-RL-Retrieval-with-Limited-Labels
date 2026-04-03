@@ -16,23 +16,27 @@ from setup.metrics import evaluate as _compute_metrics
 
 def evaluate(
     retriever_or_run: dict[str, list[str]] | str | Path | Callable[..., dict[str, list[str]]],
-    split: str = "test",
+    dataset: str = "legalbench_mini",
     query_type: str = "direct",
     qrels_level: str = "doc",
     ks: list[int] | None = None,
     **kwargs: Any,
 ) -> dict[str, float]:
     """
-    Compute recall@k, MRR, nDCG for CLERC.
+    Compute recall@k, MRR, nDCG.
 
+    dataset: 'clerc' or 'legalbench_mini'
     retriever_or_run: either
       - A run dict (qid -> list of retrieved doc/passage ids), or
       - Path to a JSON run file (same structure), or
       - A callable(queries_df, qrels, **kwargs) that returns a run dict
     """
-    from setup.clerc_data import load_queries_and_qrels_hf
-
-    queries_df, qrels = load_queries_and_qrels_hf(query_type=query_type, qrels_level=qrels_level)
+    if dataset == "legalbench_mini":
+        from setup.legalbench_data import load_queries_and_qrels
+        queries_df, qrels = load_queries_and_qrels()
+    else:
+        from setup.clerc_data import load_queries_and_qrels_hf
+        queries_df, qrels = load_queries_and_qrels_hf(query_type=query_type, qrels_level=qrels_level)
 
     if ks is None:
         ks = [1, 5, 10, 100]

@@ -4,3 +4,6 @@ RL/
 __pycache__/
 .cursor/
 .DS_Store
+
+# Local eval artifacts (large JSON traces, embedding caches)
+setup/data/runs/
