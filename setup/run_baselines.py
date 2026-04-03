@@ -49,6 +49,7 @@ def run_dpr(
     top_k: int = 100,
     batch_size: int = 32,
     cache_dir: str | Path | None = None,
+    rl_checkpoint: str | None = None,
 ) -> dict[str, list[str]]:
     """Run DPR retrieval using HF encoder with passage chunking and caching."""
     try:
@@ -61,7 +62,15 @@ def run_dpr(
     q_ids = queries_df["qid"].astype(str).tolist()
 
     print("loading model", flush=True)
-    model = SentenceTransformer(model_name)
+    if rl_checkpoint:
+        import torch
+        from rl.policy import DPRPolicy
+        print(f"Loading RL checkpoint from {rl_checkpoint}...")
+        policy = DPRPolicy(model_name)
+        policy.load_state_dict(torch.load(rl_checkpoint, map_location="cpu"))
+        model = policy.encoder
+    else:
+        model = SentenceTransformer(model_name)
     _dev = getattr(model, "_target_device", None) or getattr(model, "device", None) or next(model.parameters()).device
     print("using device: %s" % _dev, flush=True)
 
@@ -96,10 +105,20 @@ def run_dpr(
         cache_dir.mkdir(parents=True, exist_ok=True)
         model_safe_name = model_name.replace("/", "_")
         cache_path = cache_dir / f"dpr_embeddings_{model_safe_name}.npy"
-        if cache_path.exists():
+        # Chunk cache is from a pretrained run; RL moves query (and possibly shared) weights —
+        # reusing passage vectors would score queries in the wrong space.
+        if rl_checkpoint:
+            if cache_path.exists():
+                print(
+                    "Skipping passage embedding cache: RL checkpoint requires corpus re-encoding "
+                    f"(not {cache_path.name} from a prior zero-shot run).",
+                    flush=True,
+                )
+            cache_path = None
+        elif cache_path.exists():
             print(f"Loading cached embeddings from {cache_path}", flush=True)
             p_emb = np.load(str(cache_path))
-            
+
     if p_emb is None:
         print(f"encoding {len(chunk_texts)} chunks", flush=True)
         p_emb = model.encode(chunk_texts, batch_size=batch_size, show_progress_bar=True)
@@ -281,6 +300,7 @@ def main():
     )
     ap.add_argument("--max-queries", type=int, default=None, help="Subset queries for quick run")
     ap.add_argument("--out-dir", type=str, default=None, help="Write run and metrics here")
+    ap.add_argument("--rl-checkpoint", type=str, default=None, help="Path to RL fine-tuned model checkpoint to evaluate")
     args = ap.parse_args()
 
     if not any([args.bm25, args.dpr, args.cross_encoder]):
@@ -349,13 +369,22 @@ def main():
         print("BM25:", metrics)
 
     if args.dpr:
-        print("running DPR")
-        run = run_dpr(queries_df, corpus_ids, corpus_texts, top_k=max(ks), cache_dir=out_dir / "cache")
+        print("running DPR" + (" (RL fine-tuned)" if args.rl_checkpoint else ""))
+        run = run_dpr(
+            queries_df, 
+            corpus_ids, 
+            corpus_texts, 
+            top_k=max(ks), 
+            cache_dir=out_dir / "cache", 
+            rl_checkpoint=args.rl_checkpoint
+        )
         metrics = evaluate(run, qrels, ks=ks)
-        all_metrics["dpr"] = metrics
-        with open(out_dir / "run_dpr.json", "w") as f:
+        metric_key = "rl_dpr" if args.rl_checkpoint else "dpr"
+        all_metrics[metric_key] = metrics
+        out_name = "run_rl_dpr.json" if args.rl_checkpoint else "run_dpr.json"
+        with open(out_dir / out_name, "w") as f:
             json.dump({k: v for k, v in run.items()}, f, indent=0)
-        print("DPR:", metrics)
+        print(f"{'RL DPR' if args.rl_checkpoint else 'DPR'}:", metrics)
 
     if args.cross_encoder and bm25_run:
         if args.torch_threads is not None:

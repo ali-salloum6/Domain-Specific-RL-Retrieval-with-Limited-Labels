@@ -7,3 +7,5 @@ __pycache__/
 
 # Local eval artifacts (large JSON traces, embedding caches)
 setup/data/runs/
+setup/data/rl_cache/
+setup/data/rl_checkpoints/
