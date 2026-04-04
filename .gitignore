@@ -1,6 +1,5 @@
 .venv/
 IR/
-RL/
 __pycache__/
 .cursor/
 .DS_Store
