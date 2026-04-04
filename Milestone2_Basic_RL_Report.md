@@ -44,11 +44,9 @@ cd "/Users/ali/dev/uni/RL & IR"
 .venv/bin/python -m rl.train
 ```
 
-Defaults: **~620** train queries, **BM25 top-50**, **3** epochs, **`--embedding-cache auto`**. **Do not confuse with the pilot:** the **~3 min / ~11 s per epoch** timings in **§2.1** are for **100** queries and **top-30** BM25 only.
+Defaults: **~620** train queries, **BM25 top-50**, **3** epochs, **`--embedding-cache auto`**. Wall times for a **clean** default run are in **§2.2**; **§2.1** is a smaller pilot (100 queries, top-30).
 
-For the **default** full split with an **empty** chunk cache (clean `rm` above), epoch 1 does most first-time doc encodes. In one MPS trace, **~4 minutes** had elapsed at **259/620** steps (~**42%** of epoch 1), i.e. on the order of **~1 s/step** early on—so **epoch 1 alone is typically ~9–12+ minutes**, not 2–3 minutes. **Epochs 2–3** are usually **much faster** once per-`doc_id` chunk tensors are warm (often on the order of **~1.5–3 minutes** per epoch for 620 steps, depending on hit rate and thermals). **Ballpark ~15–40 minutes** total for three epochs on a laptop GPU, or longer if the machine throttles—use tqdm as ground truth for your run.
-
-**After training**, evaluate and refresh `rl_dpr` in `baseline_metrics.json`:
+**After training**, evaluate (see §2.3 — **`--rl-checkpoint`** must **re-encode** corpus chunks; `setup/run_baselines.py` skips the zero-shot `dpr_embeddings_*.npy` cache in that mode so query and passage vectors match):
 
 ```bash
 .venv/bin/python -m setup.run_baselines --dpr --rl-checkpoint setup/data/rl_checkpoints/rl_epoch_3.pt --out-dir setup/data/runs
@@ -72,42 +70,47 @@ Smaller configuration used first for pipeline validation: **100** training queri
 
 *Interpretation:* Average reward stays low because the metric is **MRR on only 10 sampled documents** (not the full 30), and **LegalBench qrels can list multiple relevant docs**, so sparse sampled lists often get near-zero credit. The pilot still shows the **cache warming** (epoch 1 vs 2–3) and stable optimization (loss magnitude small by epoch 3).
 
-### 2.2 Full training split (default CLI)
+### 2.2 Full training split (default CLI, clean run)
 
-**`python -m rl.train`** uses **`--max-train-queries 0`** (~**620** train queries) and **`--bm25-top-k 50`**. **`--max-train-queries 100 --bm25-top-k 30`** reproduces the pilot footprint.
+**`python -m rl.train`** with defaults after **`rm`** of `setup/data/rl_cache/*.pt` and **`rl_epoch_*.pt`**: **~620** train queries, **BM25 top-50**, **3** epochs, **`--embedding-cache auto`**, **`--max-chunks` 10**, etc.
 
-A **short** full-split wall time (~6–7 min for 3 epochs) only showed up when **~438** pilot docs were already on disk in a **legacy** cache file—i.e. not a true “from scratch” encode budget. A **clean** default run (§1.3) should be budgeted as **~15–40 minutes** (see §1.3). Treat metrics from checkpoints produced **after** that clean run as the canonical **full-split RL** line; re-run §1.3’s `run_baselines` command afterward.
+| Epoch | Wall time (620 steps) | Avg reward | Avg loss | Notes |
+| ----- | --------------------- | ---------- | -------- | ----- |
+| 1 | **5 m 08 s** (~2.0 it/s) | 0.0001 | −0.0006 | Cold chunk cache; **558** unique `doc_id`s cached |
+| 2 | **1 m 28 s** (~7.0 it/s) | 0.0001 | −0.0009 | Near-total cache hits |
+| 3 | **1 m 26 s** (~7.1 it/s) | 0.0001 | −0.0014 | Same |
 
-### 2.3 Full-corpus retrieval evaluation (776 queries)
+**Total** ~**8 minutes** wall time on one MPS laptop for this run. Checkpoints: **`setup/data/rl_checkpoints/rl_epoch_{1,2,3}.pt`**.
 
-**Pilot checkpoint.** After training the pilot (§2.1), we evaluated the **epoch-3** weights with the standard DPR pipeline and merged metrics into **`setup/data/runs/baseline_metrics.json`** under **`rl_dpr`**. Retrieval run file: **`setup/data/runs/run_rl_dpr.json`**.
+### 2.3 Full-corpus retrieval evaluation (776 queries, post-fix only)
+
+**Checkpoint:** **`rl_epoch_3.pt`** from the clean full-split run (§2.2). **Evaluation protocol:** chunked DPR + MaxP; **queries and passages** both encoded with weights loaded from the RL checkpoint. **`setup/run_baselines.py`** does **not** reuse **`dpr_embeddings_*.npy`** when **`--rl-checkpoint`** is set (that cache is zero-shot-only; mixing it with RL query vectors would invalidate metrics).
+
+Merged metrics: **`setup/data/runs/baseline_metrics.json`** → **`rl_dpr`**. Run file: **`setup/data/runs/run_rl_dpr.json`**.
 
 ```text
 python -m setup.run_baselines --dpr --rl-checkpoint setup/data/rl_checkpoints/rl_epoch_3.pt --out-dir setup/data/runs
 ```
 
-| Metric     | BM25   | DPR (Zero-Shot) | DPR (RL pilot, epoch 3) |
-| ---------- | ------ | --------------- | ----------------------- |
-| recall@1   | 0.7874 | 0.0284          | 0.0000                  |
-| recall@5   | 0.8673 | 0.0966          | 0.0477                  |
-| recall@10  | 0.8930 | 0.1211          | 0.0619                  |
-| recall@100 | 0.9149 | 0.4820          | 0.1649                  |
-| MRR        | 0.8245 | 0.0657          | 0.0182                  |
-| nDCG@10    | 0.8403 | 0.0703          | 0.0270                  |
+| Metric     | BM25   | DPR (Zero-Shot) | DPR (RL, full split, epoch 3) |
+| ---------- | ------ | --------------- | ------------------------------- |
+| recall@1   | 0.7874 | 0.0284          | 0.0000                          |
+| recall@5   | 0.8673 | 0.0966          | 0.0026                          |
+| recall@10  | 0.8930 | 0.1211          | 0.0129                          |
+| recall@100 | 0.9149 | 0.4820          | 0.0889                          |
+| MRR        | 0.8245 | 0.0657          | 0.0045                          |
+| nDCG@10    | 0.8403 | 0.0703          | 0.0043                          |
 
-*BM25 / zero-shot DPR: Milestone 1 baselines. **RL pilot** row: `setup/metrics.evaluate` on the merged **`rl_dpr`** block in `baseline_metrics.json` (same protocol: chunked DPR, MaxP, 776 queries).*
+*BM25 / zero-shot DPR: Milestone 1. **RL** row: post-fix **`rl_dpr`** in `baseline_metrics.json` (same `evaluate` definition as Milestone 1).*
 
 ### 2.4 Key observations
 
-The **pilot** RL checkpoint **underperforms zero-shot DPR** on full-corpus retrieval (table above). Plausible drivers: **only 100** training queries, **REINFORCE** noise, updates that mostly affect the **query** side while chunk encodes are reused, and **train/eval mismatch** (policy on **top-30** + **sampled** lists vs **corpus-wide** DPR eval).
-
-**Full-split** `rl_dpr` numbers in `baseline_metrics.json` should be refreshed after the **clean** training in §1.3 (old checkpoints on disk were deleted to match that protocol).
+The **RL-fine-tuned** retriever **lags zero-shot DPR** on full-corpus LegalBench-RAG-mini (table above). Likely factors: **REINFORCE** noise and low per-step reward, training on **BM25 top-50** with **sampled** short lists vs **corpus-wide** eval, **query-centric** updates with document-side chunk encodes **frozen** during RL, and only **3** epochs. The **pilot** (§2.1) was for **pipeline** validation only; **§2.2–2.3** are the numbers we report for Milestone 2 retrieval quality.
 
 ---
 
 ## 3. Next Steps (Milestone 3)
 
-- **Sample Efficiency Ablations**: We will run training sweeps using varying fractions of the training labels (e.g., 10%, 25%, 50%, 100%) to plot sample-efficiency curves.
 - **Reward Formulation**: We can experiment with blending downstream task accuracy (like citation correctness) into the reward signal, instead of just using standard IR metrics.
 - **Scale Up**: If time and compute permit, we can extend the evaluation to the larger CLERC dataset.
 
