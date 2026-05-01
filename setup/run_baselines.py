@@ -41,6 +41,19 @@ def run_bm25(
         run[qid] = [h.docid for h in hits]
     return run
 
+def _resolve_dpr_device(dpr_device: str | None) -> str:
+    """Pick a device for DPR encode (RL or zero-shot)."""
+    import torch
+
+    if dpr_device is None or dpr_device == "auto":
+        if torch.cuda.is_available():
+            return "cuda"
+        if getattr(torch.backends, "mps", None) is not None and torch.backends.mps.is_available():
+            return "mps"
+        return "cpu"
+    return dpr_device
+
+
 def run_dpr(
     queries_df,
     corpus_ids: list[str],
@@ -50,6 +63,7 @@ def run_dpr(
     batch_size: int = 32,
     cache_dir: str | Path | None = None,
     rl_checkpoint: str | None = None,
+    dpr_device: str | None = "auto",
 ) -> dict[str, list[str]]:
     """Run DPR retrieval using HF encoder with passage chunking and caching."""
     try:
@@ -65,12 +79,20 @@ def run_dpr(
     if rl_checkpoint:
         import torch
         from rl.policy import DPRPolicy
+
         print(f"Loading RL checkpoint from {rl_checkpoint}...")
         policy = DPRPolicy(model_name)
         policy.load_state_dict(torch.load(rl_checkpoint, map_location="cpu"))
         model = policy.encoder
+        dev = _resolve_dpr_device(dpr_device)
+        model.to(dev)
+        print(f"moved RL encoder to {dev}", flush=True)
     else:
         model = SentenceTransformer(model_name)
+        dev = _resolve_dpr_device(dpr_device)
+        if dev != "cpu":
+            model.to(dev)
+            print(f"moved DPR encoder to {dev}", flush=True)
     _dev = getattr(model, "_target_device", None) or getattr(model, "device", None) or next(model.parameters()).device
     print("using device: %s" % _dev, flush=True)
 
@@ -301,6 +323,18 @@ def main():
     ap.add_argument("--max-queries", type=int, default=None, help="Subset queries for quick run")
     ap.add_argument("--out-dir", type=str, default=None, help="Write run and metrics here")
     ap.add_argument("--rl-checkpoint", type=str, default=None, help="Path to RL fine-tuned model checkpoint to evaluate")
+    ap.add_argument(
+        "--dpr-device",
+        default="auto",
+        choices=["auto", "cpu", "mps", "cuda"],
+        help="Device for DPR / RL-DPR encoding (auto prefers CUDA, then MPS, else CPU).",
+    )
+    ap.add_argument(
+        "--dpr-batch-size",
+        type=int,
+        default=32,
+        help="Encode batch size for DPR queries and passages (lower if GPU OOM).",
+    )
     args = ap.parse_args()
 
     if not any([args.bm25, args.dpr, args.cross_encoder]):
@@ -371,12 +405,14 @@ def main():
     if args.dpr:
         print("running DPR" + (" (RL fine-tuned)" if args.rl_checkpoint else ""))
         run = run_dpr(
-            queries_df, 
-            corpus_ids, 
-            corpus_texts, 
-            top_k=max(ks), 
-            cache_dir=out_dir / "cache", 
-            rl_checkpoint=args.rl_checkpoint
+            queries_df,
+            corpus_ids,
+            corpus_texts,
+            top_k=max(ks),
+            batch_size=max(1, args.dpr_batch_size),
+            cache_dir=out_dir / "cache",
+            rl_checkpoint=args.rl_checkpoint,
+            dpr_device=args.dpr_device,
         )
         metrics = evaluate(run, qrels, ks=ks)
         metric_key = "rl_dpr" if args.rl_checkpoint else "dpr"

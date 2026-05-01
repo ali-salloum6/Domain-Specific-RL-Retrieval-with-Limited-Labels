@@ -1,0 +1,53 @@
+% comparison table 
+\begin{table*}[!t]
+    \caption{Reliance of state-of-the-art comparison systems and our \alg{} on negative document mining and additional supervision. Each check denotes a heuristics used during training. Our method minimizes the reliance on the type of negative documents, and does not require any additional supervision from other models to improve retrieval performance.} 
+    \vspace{5pt}
+    \centering \small
+    \setlength{\tabcolsep}{1.1pt}
+    \begin{tabular}{lccccc}
+        \toprule
+        \textbf{Method} & \multicolumn{3}{c}{\textbf{Source of Negative Documents}}& \multicolumn{2}{c}{\textbf{Additional Supervision}} \\
+          & In-Batch & BM25 & Dense Model & Cross-Encoder & Late Interaction Model \\
+         \midrule
+         SBERT           & & {\color{redberry}\ding{51}} & {\color{redberry}\ding{51}}{\color{redberry}\ding{51}}{\color{redberry}\ding{51}} & {\color{redberry}\ding{51}} & \\
+         TAS-B            & {\color{redberry}\ding{51}} & {\color{redberry}\ding{51}} & & {\color{redberry}\ding{51}} & {\color{redberry}\ding{51}}\\
+         SPLADEv2         & & {\color{redberry}\ding{51}} & {\color{redberry}\ding{51}}{\color{redberry}\ding{51}} & {\color{redberry}\ding{51}} & \\
+         \alg{} (Ours) & & & \color{redberry}\ding{51} & & \\
+        \bottomrule
+    \end{tabular}
+    \vspace{-10pt}
+    \label{tab:model-comparison}
+\end{table*}
+
+
+% performance table 
+\begin{table*}[tb!] 
+    \vspace{-20pt}
+    \caption{Second-stage reranking: nDCG@10 in-domain results. * marks evaluations run by us using the publicly available checkpoint. Bold font represents the highest number per row, and underline shows the second highest. Light green color highlights the experiments where our \alg{} yields performance gain.} 
+    \vspace{5pt}
+    \centering \small
+    \begin{tabular}{l r r r r r r r r r }
+        \toprule
+        \textbf{Dataset} & \multicolumn{3}{c}{\textbf{Comparison Systems}} & \multicolumn{2}{c}{\textbf{Ours: \alg{}}} \\
+            & SBERT* & TAS-B* & SPLADEv2* & with SBERT & with TAS-B   \\ 
+        \midrule
+MS MARCO dev & 0.892 & 0.893 & 0.900 & \cellcolor{lightgreen}\textbf{0.987} & \cellcolor{lightgreen}\underline{0.982} \\
+        \midrule
+TREC-DL 2019 & \underline{0.743} & \textbf{0.749} & \textbf{0.749} & 0.742 & 0.741\\
+TREC-COVID & \textbf{0.764} & 0.711 & \underline{0.731} & 0.690 & 0.630\\
+NFCorpus & \underline{0.308} & 0.320 & \textbf{0.341} & 0.249 & 0.303\\
+NQ & 0.836 & 0.836 & 0.854 & \cellcolor{lightgreen}\underline{0.869} & \cellcolor{lightgreen}\textbf{0.878}\\
+HotpotQA & 0.747 & 0.785 & 0.834 & \cellcolor{lightgreen}\textbf{0.902} & \cellcolor{lightgreen}\underline{0.900}\\
+FiQA-2018 & \underline{0.291} & 0.279 & \textbf{0.342} & 0.131 & 0.139\\
+ArguAna & 0.351 & 0.479 & \textbf{0.480} & \cellcolor{lightgreen}\underline{0.354} & 0.443\\
+Touché-2020 & \textbf{0.480} & 0.423 & \underline{0.460} & 0.363 & 0.361\\
+Quora & 0.962 & \textbf{0.982} & \underline{0.967} & \cellcolor{lightgreen}0.963 & \cellcolor{lightgreen}\textbf{0.982}\\
+DBPedia & 0.513 & 0.513 & \textbf{0.533} & \cellcolor{lightgreen}0.521 & \cellcolor{lightgreen}\underline{0.525}\\
+SCIDOCS & 0.144 & \underline{0.151} & \textbf{0.163} & 0.108 & 0.136\\
+FEVER & \textbf{0.931} & 0.911 & \underline{0.929} & 0.907 & \cellcolor{lightgreen}0.913\\
+Climate-FEVER & \underline{0.442} & 0.433 & \textbf{0.444} & 0.438 & 0.383\\
+SciFact & \underline{0.597} & 0.579 & \textbf{0.696} & 0.316 & 0.410\\
+        \bottomrule
+    \end{tabular}
+    \vspace{-8pt}
+\end{table*}

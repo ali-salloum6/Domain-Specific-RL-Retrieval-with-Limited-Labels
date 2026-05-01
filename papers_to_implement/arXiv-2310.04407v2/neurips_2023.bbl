@@ -1,0 +1,311 @@
+\begin{thebibliography}{60}
+\providecommand{\natexlab}[1]{#1}
+\providecommand{\url}[1]{\texttt{#1}}
+\expandafter\ifx\csname urlstyle\endcsname\relax
+  \providecommand{\doi}[1]{doi: #1}\else
+  \providecommand{\doi}{doi: \begingroup \urlstyle{rm}\Url}\fi
+
+\bibitem[Asadi \& Lin(2013)Asadi and Lin]{asadi2013effectiveness}
+Nima Asadi and Jimmy Lin.
+\newblock Effectiveness/efficiency tradeoffs for candidate generation in multi-stage retrieval architectures.
+\newblock \emph{International ACM SIGIR Conference on Research and Development in Information Retrieval}, 2013.
+
+\bibitem[Berger et~al.(2000)Berger, Caruana, Cohn, Freitag, and Mittal]{Berger2000BridgingTL}
+Adam~L. Berger, Rich Caruana, David~A. Cohn, Dayne Freitag, and Vibhu Mittal.
+\newblock Bridging the lexical chasm: statistical approaches to answer-finding.
+\newblock \emph{International ACM SIGIR Conference on Research and Development in Information Retrieval}, 2000.
+
+\bibitem[Campos et~al.(2017)Campos, Nguyen, Rosenberg, Song, Gao, Tiwary, Majumder, Deng, and Mitra]{Campos2016MSMA}
+Daniel~Fernando Campos, Tri Nguyen, Mir Rosenberg, Xia Song, Jianfeng Gao, Saurabh Tiwary, Rangan Majumder, Li~Deng, and Bhaskar Mitra.
+\newblock Ms marco: A human generated machine reading comprehension dataset.
+\newblock \emph{International Conference on Learning Representations}, 2017.
+
+\bibitem[Chen et~al.(2017{\natexlab{a}})Chen, Fisch, Weston, and Bordes]{Chen2017ReadingWT}
+Danqi Chen, Adam Fisch, Jason Weston, and Antoine Bordes.
+\newblock Reading wikipedia to answer open-domain questions.
+\newblock \emph{Annual Meeting of the Association for Computational Linguistics}, 2017{\natexlab{a}}.
+
+\bibitem[Chen et~al.(2017{\natexlab{b}})Chen, Gallagher, Blanco, and Culpepper]{chen2017efficient}
+Ruey-Cheng Chen, Luke Gallagher, Roi Blanco, and J~Shane Culpepper.
+\newblock Efficient cost-aware cascade ranking in multi-stage retrieval.
+\newblock \emph{International ACM SIGIR Conference on Research and Development in Information Retrieval}, 2017{\natexlab{b}}.
+
+\bibitem[Cheriton(2019)]{Cheriton2019FromDT}
+David~R. Cheriton.
+\newblock From doc2query to doctttttquery.
+\newblock \emph{ArXiv}, 2019.
+
+\bibitem[Craswell et~al.(2021)Craswell, Mitra, Yilmaz, Campos, and Voorhees]{Craswell2020OverviewOT}
+Nick Craswell, Bhaskar Mitra, Emine Yilmaz, Daniel~Fernando Campos, and Ellen~M. Voorhees.
+\newblock Overview of the trec 2020 deep learning track.
+\newblock \emph{ArXiv}, 2021.
+
+\bibitem[Deerwester et~al.(1990)Deerwester, Dumais, Landauer, Furnas, and Harshman]{Deerwester1990IndexingBL}
+Scott~C. Deerwester, Susan~T. Dumais, Thomas~K. Landauer, George~W. Furnas, and Richard~A. Harshman.
+\newblock Indexing by latent semantic analysis.
+\newblock \emph{Journal of the Association for Information Science and Technology}, 1990.
+
+\bibitem[Delgado \& Greyson(2023)Delgado and Greyson]{amazon_blog}
+Joaquin Delgado and Paul Greyson.
+\newblock From structured search to learning to rank and retrieve.
+\newblock Blog, March 2023.
+\newblock URL \url{https://www.amazon.science/blog/from-structured-search-to-learning-to-rank-and-retrieve}.
+\newblock Accessed: June 23, 2023.
+
+\bibitem[Formal et~al.(2021)Formal, Lassance, Piwowarski, and Clinchant]{Formal2021SPLADEVS}
+Thibault Formal, C.~Lassance, Benjamin Piwowarski, and St{\'e}phane Clinchant.
+\newblock Splade v2: Sparse lexical and expansion model for information retrieval.
+\newblock \emph{ArXiv}, 2021.
+
+\bibitem[Gillick et~al.(2018)Gillick, Presta, and Tomar]{Gillick2018EndtoEndRI}
+Daniel Gillick, Alessandro Presta, and Gaurav~Singh Tomar.
+\newblock End-to-end retrieval in continuous space.
+\newblock \emph{ArXiv}, 2018.
+
+\bibitem[Guo et~al.(2022)Guo, Cai, Fan, Sun, Zhang, and Cheng]{guo2022semantic}
+Jiafeng Guo, Yinqiong Cai, Yixing Fan, Fei Sun, Ruqing Zhang, and Xueqi Cheng.
+\newblock Semantic models for the first-stage retrieval: A comprehensive review.
+\newblock \emph{ACM Transactions on Information Systems}, 2022.
+
+\bibitem[Guo et~al.(2020)Guo, Yang, Cer, Shen, and Constant]{Guo2020MultiReQAAC}
+Mandy Guo, Yinfei Yang, Daniel~Matthew Cer, Qinlan Shen, and Noah Constant.
+\newblock Multireqa: A cross-domain evaluation forretrieval question answering models.
+\newblock \emph{European Chapter of the Association for Computational Linguistics: The Second Workshop on Domain Adaptation for NLP}, 2020.
+
+\bibitem[Hofst{\"a}tter et~al.(2021)Hofst{\"a}tter, Lin, Yang, Lin, and Hanbury]{Hofsttter2021EfficientlyTA}
+Sebastian Hofst{\"a}tter, Sheng-Chieh Lin, Jheng-Hong Yang, Jimmy~J. Lin, and Allan Hanbury.
+\newblock Efficiently teaching an effective dense retriever with balanced topic aware sampling.
+\newblock \emph{International ACM SIGIR Conference on Research and Development in Information Retrieval}, 2021.
+
+\bibitem[Huang et~al.(2013)Huang, He, Gao, Deng, Acero, and Heck]{Huang2013LearningDS}
+Po-Sen Huang, Xiaodong He, Jianfeng Gao, Li~Deng, Alex Acero, and Larry Heck.
+\newblock Learning deep structured semantic models for web search using clickthrough data.
+\newblock \emph{ACM International Conference on Information \& Knowledge Management}, 2013.
+
+\bibitem[Humeau et~al.(2020)Humeau, Shuster, Lachaux, and Weston]{Humeau2020PolyencodersAA}
+Samuel Humeau, Kurt Shuster, Marie-Anne Lachaux, and Jason Weston.
+\newblock Poly-encoders: Architectures and pre-training strategies for fast and accurate multi-sentence scoring.
+\newblock \emph{International Conference on Learning Representations}, 2020.
+
+\bibitem[Jang et~al.(2017)Jang, Gu, and Poole]{jang2016categorical}
+Eric Jang, Shixiang Gu, and Ben Poole.
+\newblock Categorical reparameterization with gumbel-softmax.
+\newblock \emph{International Conference on Learning Representations}, 2017.
+
+\bibitem[J{\"a}rvelin \& Kek{\"a}l{\"a}inen(2000)J{\"a}rvelin and Kek{\"a}l{\"a}inen]{jarvelin2000ir}
+Kalervo J{\"a}rvelin and Jaana Kek{\"a}l{\"a}inen.
+\newblock Ir evaluation methods for retrieving highly relevant documents.
+\newblock \emph{International ACM SIGIR Conference on Research and Development in Information Retrieval: Forum}, 2000.
+
+\bibitem[Joachims(2006)]{Joachims/06a}
+T.~Joachims.
+\newblock Training linear {SVMs} in linear time.
+\newblock \emph{ACM SIGKDD International Conference On Knowledge Discovery and Data Mining}, 2006.
+
+\bibitem[Joachims et~al.(2009)Joachims, Finley, and Yu]{Joachims/etal/09a}
+T.~Joachims, T.~Finley, and Chun-Nam Yu.
+\newblock Cutting-plane training of structural svms.
+\newblock \emph{Machine Learning}, 2009.
+
+\bibitem[Karpukhin et~al.(2020)Karpukhin, Oğuz, Min, Lewis, Wu, Edunov, Chen, and tau Yih]{Karpukhin2020DensePR}
+Vladimir Karpukhin, Barlas Oğuz, Sewon Min, Patrick Lewis, Ledell~Yu Wu, Sergey Edunov, Danqi Chen, and Wen tau Yih.
+\newblock Dense passage retrieval for open-domain question answering.
+\newblock \emph{Conference on Empirical Methods in Natural Language Processing}, 2020.
+
+\bibitem[Khattab \& Zaharia(2020)Khattab and Zaharia]{khattab2020colbert}
+Omar Khattab and Matei Zaharia.
+\newblock Colbert: Efficient and effective passage search via contextualized late interaction over bert.
+\newblock \emph{International ACM SIGIR conference on research and development in Information Retrieval}, 2020.
+
+\bibitem[Kool et~al.(2019)Kool, van Hoof, and Welling]{kool2019buy}
+Wouter Kool, Herke van Hoof, and Max Welling.
+\newblock Buy 4 reinforce samples, get a baseline for free!
+\newblock \emph{International Conference on Learning Representations: Deep RL Meets Structured Prediction Workshop}, 2019.
+
+\bibitem[Kwiatkowski et~al.(2019)Kwiatkowski, Palomaki, Redfield, Collins, Parikh, Alberti, Epstein, Polosukhin, Devlin, Lee, Toutanova, Jones, Kelcey, Chang, Dai, Uszkoreit, Le, and Petrov]{Kwiatkowski2019NaturalQA}
+Tom Kwiatkowski, Jennimaria Palomaki, Olivia Redfield, Michael Collins, Ankur~P. Parikh, Chris Alberti, Danielle Epstein, Illia Polosukhin, Jacob Devlin, Kenton Lee, Kristina Toutanova, Llion Jones, Matthew Kelcey, Ming-Wei Chang, Andrew~M. Dai, Jakob Uszkoreit, Quoc~V. Le, and Slav Petrov.
+\newblock Natural questions: A benchmark for question answering research.
+\newblock \emph{Transactions of the Association for Computational Linguistics}, 2019.
+
+\bibitem[Lewis et~al.(2020)Lewis, Perez, Piktus, Petroni, Karpukhin, Goyal, Kuttler, Lewis, tau Yih, Rockt{\"a}schel, Riedel, and Kiela]{Lewis2020RetrievalAugmentedGF}
+Patrick Lewis, Ethan Perez, Aleksandara Piktus, Fabio Petroni, Vladimir Karpukhin, Naman Goyal, Heinrich Kuttler, Mike Lewis, Wen tau Yih, Tim Rockt{\"a}schel, Sebastian Riedel, and Douwe Kiela.
+\newblock Retrieval-augmented generation for knowledge-intensive nlp tasks.
+\newblock \emph{Conference on Neural Information Processing Systems}, 2020.
+
+\bibitem[Liang et~al.(2020)Liang, Xu, Shakeri, dos Santos, Nallapati, Huang, and Xiang]{Liang2020EmbeddingbasedZR}
+Davis Liang, Peng Xu, Siamak Shakeri, C{\'i}cero~Nogueira dos Santos, Ramesh Nallapati, Zhiheng Huang, and Bing Xiang.
+\newblock Embedding-based zero-shot retrieval through query generation.
+\newblock \emph{ArXiv}, 2020.
+
+\bibitem[Lin et~al.(2020)Lin, Nogueira, and Yates]{Lin2020PretrainedTF}
+Jimmy~J. Lin, Rodrigo Nogueira, and Andrew Yates.
+\newblock Pretrained transformers for text ranking: Bert and beyond.
+\newblock \emph{ACM International Conference on Web Search and Data Mining}, 2020.
+
+\bibitem[Liu et~al.(2017)Liu, Xiao, Ou, and Si]{liu2017cascade}
+Shichen Liu, Fei Xiao, Wenwu Ou, and Luo Si.
+\newblock Cascade ranking for operational e-commerce search.
+\newblock \emph{ACM SIGKDD International Conference on Knowledge Discovery and Data Mining}, 2017.
+
+\bibitem[Liu et~al.(2009)]{liu2009learning}
+Tie-Yan Liu et~al.
+\newblock Learning to rank for information retrieval.
+\newblock \emph{Foundations and Trends{\textregistered} in Information Retrieval}, 2009.
+
+\bibitem[Luan et~al.(2021)Luan, Eisenstein, Toutanova, and Collins]{luan2021sparse}
+Yi~Luan, Jacob Eisenstein, Kristina Toutanova, and Michael Collins.
+\newblock Sparse, dense, and attentional representations for text retrieval.
+\newblock \emph{Transactions of the Association for Computational Linguistics}, 2021.
+
+\bibitem[Luce(1959)]{luce1959individual}
+R~Duncan Luce.
+\newblock \emph{Individual choice behavior: A theoretical analysis}.
+\newblock 1959.
+
+\bibitem[Ma et~al.(2021)Ma, Korotkov, Yang, Hall, and McDonald]{Ma2021ZeroshotNP}
+Ji~Ma, Ivan Korotkov, Yinfei Yang, Keith~B. Hall, and Ryan~T. McDonald.
+\newblock Zero-shot neural passage retrieval via domain-targeted synthetic question generation.
+\newblock \emph{Conference of the European Chapter of the Association for Computational Linguistics}, 2021.
+
+\bibitem[Mackenzie et~al.(2018)Mackenzie, Culpepper, Blanco, Crane, Clarke, and Lin]{mackenzie2018query}
+Joel Mackenzie, J~Shane Culpepper, Roi Blanco, Matt Crane, Charles~LA Clarke, and Jimmy Lin.
+\newblock Query driven algorithm selection in early stage retrieval.
+\newblock \emph{ACM International Conference on Web Search and Data Mining}, 2018.
+
+\bibitem[Matveeva et~al.(2006)Matveeva, Burges, Burkard, Laucius, and Wong]{matveeva2006high}
+Irina Matveeva, Chris Burges, Timo Burkard, Andy Laucius, and Leon Wong.
+\newblock High accuracy retrieval with multiple nested ranker.
+\newblock \emph{International ACM SIGIR Conference on Research and Development in Information Retrieval}, 2006.
+
+\bibitem[Ni et~al.(2021)Ni, Qu, Lu, Dai, Abrego, Ma, Zhao, Luan, Hall, Chang, and Yang]{Ni2021LargeDE}
+Jianmo Ni, Chen Qu, Jing Lu, Zhuyun Dai, Gustavo~Hernandez Abrego, Ji~Ma, Vincent Zhao, Yi~Luan, Keith~B. Hall, Ming-Wei Chang, and Yinfei Yang.
+\newblock Large dual encoders are generalizable retrievers.
+\newblock \emph{Conference on Empirical Methods in Natural Language Processing}, 2021.
+
+\bibitem[Nogueira \& Cho(2019)Nogueira and Cho]{Nogueira2019PassageRW}
+Rodrigo Nogueira and Kyunghyun Cho.
+\newblock Passage re-ranking with bert.
+\newblock \emph{ArXiv}, 2019.
+
+\bibitem[Nogueira et~al.(2019)Nogueira, Yang, Lin, and Cho]{Nogueira2019DocumentEB}
+Rodrigo Nogueira, Wei Yang, Jimmy~J. Lin, and Kyunghyun Cho.
+\newblock Document expansion by query prediction.
+\newblock \emph{ArXiv}, 2019.
+
+\bibitem[Oosterhuis(2021)]{oosterhuis2021computationally}
+Harrie Oosterhuis.
+\newblock Computationally efficient optimization of plackett-luce ranking models for relevance and fairness.
+\newblock \emph{International ACM SIGIR Conference on Research and Development in Information Retrieval}, 2021.
+
+\bibitem[OpenAI(2023)]{chatgpt_plugin}
+OpenAI.
+\newblock Chatgpt plugins: Extending conversational ai.
+\newblock Blog, March 2023.
+\newblock URL \url{https://openai.com/blog/chatgpt-plugins}.
+\newblock Accessed: June 23, 2023.
+
+\bibitem[Paranjape et~al.(2022)Paranjape, Khattab, Potts, Zaharia, and Manning]{Paranjape2021HindsightPT}
+Ashwin Paranjape, O.~Khattab, Christopher Potts, Matei~A. Zaharia, and Christopher~D. Manning.
+\newblock Hindsight: Posterior-guided training of retrievers for improved open-ended generation.
+\newblock \emph{International Conference on Learning Representations}, 2022.
+
+\bibitem[Pedersen(2010)]{pedersen2010query}
+Jan Pedersen.
+\newblock Query understanding at bing, 2010.
+
+\bibitem[Plackett(1975)]{plackett1975analysis}
+Robin~L Plackett.
+\newblock The analysis of permutations.
+\newblock \emph{Journal of the Royal Statistical Society Series C: Applied Statistics}, 1975.
+
+\bibitem[Qu et~al.(2021)Qu, Ding, Liu, Liu, Ren, Zhao, Dong, Wu, and Wang]{Qu2020RocketQAAO}
+Yingqi Qu, Yuchen Ding, Jing Liu, Kai Liu, Ruiyang Ren, Xin Zhao, Daxiang Dong, Hua Wu, and Haifeng Wang.
+\newblock Rocketqa: An optimized training approach to dense passage retrieval for open-domain question answering.
+\newblock \emph{North American Chapter of the Association for Computational Linguistics}, 2021.
+
+\bibitem[Reimers \& Gurevych(2019)Reimers and Gurevych]{reimers-2019-sentence-bert}
+Nils Reimers and Iryna Gurevych.
+\newblock Sentence-bert: Sentence embeddings using siamese bert-networks.
+\newblock \emph{Conference on Empirical Methods in Natural Language Processing}, 2019.
+
+\bibitem[Robertson \& Zaragoza(2009)Robertson and Zaragoza]{Robertson2009ThePR}
+Stephen~E. Robertson and Hugo Zaragoza.
+\newblock The probabilistic relevance framework: Bm25 and beyond.
+\newblock \emph{Found. Trends Inf. Retr.}, 2009.
+
+\bibitem[Sanh et~al.(2019)Sanh, Debut, Chaumond, and Wolf]{Sanh2019DistilBERTAD}
+Victor Sanh, Lysandre Debut, Julien Chaumond, and Thomas Wolf.
+\newblock Distilbert, a distilled version of bert: smaller, faster, cheaper and lighter.
+\newblock \emph{Conference on Neural Information Processing Systems: The Fifth Workshop on Energy Efficient Machine Learning and Cognitive Computing}, 2019.
+
+\bibitem[Santhanam et~al.(2021)Santhanam, Khattab, Saad-Falcon, Potts, and Zaharia]{Santhanam2021ColBERTv2EA}
+Keshav Santhanam, O.~Khattab, Jon Saad-Falcon, Christopher Potts, and Matei~A. Zaharia.
+\newblock Colbertv2: Effective and efficient retrieval via lightweight late interaction.
+\newblock \emph{North American Chapter of the Association for Computational Linguistics}, 2021.
+
+\bibitem[Singh \& Joachims(2019)Singh and Joachims]{singh2019policy}
+Ashudeep Singh and Thorsten Joachims.
+\newblock Policy learning for fairness in ranking.
+\newblock \emph{Advances in neural information processing systems}, 2019.
+
+\bibitem[Sun et~al.(2022)Sun, Xiong, Yu, Overwijk, Liu, and Bao]{Sun2022ReduceCF}
+Si~Sun, Chenyan Xiong, Yue Yu, Arnold Overwijk, Zhiyuan Liu, and Jie Bao.
+\newblock Reduce catastrophic forgetting of dense retrieval training with teleportation negatives.
+\newblock \emph{Conference on Empirical Methods in Natural Language Processing}, 2022.
+
+\bibitem[tau Yih et~al.(2011)tau Yih, Toutanova, Platt, and Meek]{Yih2011LearningDP}
+Wen tau Yih, Kristina Toutanova, John~C. Platt, and Christopher Meek.
+\newblock Learning discriminative projections for text similarity measures.
+\newblock \emph{Conference on Computational Natural Language Learning}, 2011.
+
+\bibitem[Thakur et~al.(2021)Thakur, Reimers, Ruckl'e, Srivastava, and Gurevych]{Thakur2021BEIRAH}
+Nandan Thakur, Nils Reimers, Andreas Ruckl'e, Abhishek Srivastava, and Iryna Gurevych.
+\newblock Beir: A heterogenous benchmark for zero-shot evaluation of information retrieval models.
+\newblock \emph{Conference on Neural Information Processing Systems}, 2021.
+
+\bibitem[Voorhees(1999)]{Voorhees1999TheTQ}
+Ellen~M. Voorhees.
+\newblock The trec-8 question answering track report.
+\newblock \emph{Text Retrieval Conference}, 1999.
+
+\bibitem[Wang et~al.(2011)Wang, Lin, and Metzler]{wang2011cascade}
+Lidan Wang, Jimmy Lin, and Donald Metzler.
+\newblock A cascade ranking model for efficient ranked retrieval.
+\newblock \emph{International ACM SIGIR Conference on Research and Development in Information Retrieval}, 2011.
+
+\bibitem[Wang et~al.(2013)Wang, Wang, Li, He, and Liu]{Wang2013ATA}
+Yining Wang, Liwei Wang, Yuanzhi Li, Di~He, and Tie-Yan Liu.
+\newblock A theoretical analysis of ndcg type ranking measures.
+\newblock \emph{Annual Conference Computational Learning Theory}, 2013.
+
+\bibitem[Williams(1992)]{williams1992simple}
+Ronald~J Williams.
+\newblock Simple statistical gradient-following algorithms for connectionist reinforcement learning.
+\newblock \emph{Reinforcement learning}, 1992.
+
+\bibitem[Xiong et~al.(2021)Xiong, Xiong, Li, Tang, Liu, Bennett, Ahmed, and Overwijk]{Xiong2020ApproximateNN}
+Lee Xiong, Chenyan Xiong, Ye~Li, Kwok-Fung Tang, Jialin Liu, Paul Bennett, Junaid Ahmed, and Arnold Overwijk.
+\newblock Approximate nearest neighbor negative contrastive learning for dense text retrieval.
+\newblock \emph{International Conference on Learning Representations}, 2021.
+
+\bibitem[Yang et~al.(2020)Yang, Jin, Lin, Guo, and Cer]{Yang2020NeuralRF}
+Yinfei Yang, Ning Jin, Kuo Lin, Mandy Guo, and Daniel~Matthew Cer.
+\newblock Neural retrieval for question answering with cross-attention supervised data augmentation.
+\newblock \emph{Annual Meeting of the Association for Computational Linguistics}, 2020.
+
+\bibitem[Yang et~al.(2018)Yang, Qi, Zhang, Bengio, Cohen, Salakhutdinov, and Manning]{Yang2018HotpotQAAD}
+Zhilin Yang, Peng Qi, Saizheng Zhang, Yoshua Bengio, William~W. Cohen, Ruslan Salakhutdinov, and Christopher~D. Manning.
+\newblock Hotpotqa: A dataset for diverse, explainable multi-hop question answering.
+\newblock \emph{Conference on Empirical Methods in Natural Language Processing}, 2018.
+
+\bibitem[Yu(2022)]{Yu2022RetrievalaugmentedGA}
+W.~Yu.
+\newblock Retrieval-augmented generation across heterogeneous knowledge.
+\newblock \emph{North American Chapter of the Association for Computational Linguistics}, 2022.
+
+\bibitem[Zhao et~al.(2021)Zhao, Lu, and Lee]{Zhao2020SPARTAEO}
+Tiancheng Zhao, Xiaopeng Lu, and Kyusong Lee.
+\newblock Sparta: Efficient open-domain question answering via sparse transformer matching retrieval.
+\newblock \emph{North American Chapter of the Association for Computational Linguistics}, 2021.
+
+\end{thebibliography}

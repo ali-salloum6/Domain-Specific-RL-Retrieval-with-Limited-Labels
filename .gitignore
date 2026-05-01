@@ -8,3 +8,8 @@ __pycache__/
 setup/data/runs/
 setup/data/rl_cache/
 setup/data/rl_checkpoints/
+
+*.zip
+kaggle_model_eval/
+local_model_eval/
+setup/data/runs_ppg_eval/
